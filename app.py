@@ -177,8 +177,12 @@ def handle_callback():
     # Get the authorization code from the query parameters
     auth_code = request.args.get('code')
     
+    # Debugging: Print the received authorization code
+    print("Received Authorization Code:", auth_code)
+    
     if not auth_code:
         return jsonify({'error': 'Authorization code missing'}), 400
+
 
     try:
         # Exchange the authorization code for an access token
@@ -205,3 +209,10 @@ def handle_callback():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@app.route('/callback', methods=['POST'])
+def callback():
+    data = request.json
+    print("Authorization Code Received:", data.get('code'))
+    # Process the authorization code...
